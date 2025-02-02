@@ -46,10 +46,10 @@ for i in range(len(t) - 1):  # Use len(t)-1 to avoid going out of range
     # Control Law: Apply torque based on PID output
     if abs(output) > 0:
         if output > 0:
-            # Apply negative torque to slow down positive spin
+            # Apply positive torque to slow down negative spin
             tau_control = 1.5
         else:
-            # Apply positive torque to slow down negative spin
+            # Apply negative torque to slow down positive spin
             tau_control = -1.5
     tau_natural = np.random.uniform(-1,1)  # no random torque for now
     # Update total torque (control torque + natural torque)
@@ -67,8 +67,11 @@ for i in range(len(t) - 1):  # Use len(t)-1 to avoid going out of range
 # Plotting the results (position over time)
 plt.figure("Position vs Time")
 plt.plot(t, theta)
+
+# Adding lines to illustrate (+/-) 5 degree of setpoint requirement
 plt.axhline((setpoint-(5*(np.pi/180))), color='k', linestyle='--') 
-plt.axhline((setpoint+(5*(np.pi/180))), color='k', linestyle='--') 
+plt.axhline((setpoint+(5*(np.pi/180))), color='k', linestyle='--')
+
 plt.xlabel("Time [s]")
 plt.ylabel("Position (Theta) [rad]")
 plt.title("PID Controlled Rotation (Position vs Time)")
